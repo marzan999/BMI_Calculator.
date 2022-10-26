@@ -1,3 +1,5 @@
+// import 'dart:math';
+
 import 'package:bmi_calculator/result.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,7 @@ class _HomePageState extends State<HomePage> {
   bool isMale = true;
   int weight = 50;
   int age = 20;
+  int height = 160;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                     'BMI Calculator',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 35,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold),
                   )),
                 )),
@@ -119,8 +122,58 @@ class _HomePageState extends State<HomePage> {
                 )),
             Expanded(
                 flex: 3,
-                child: Container(
-                  color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: Container(
+                    width: double.infinity,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      color: Color.fromARGB(255, 187, 197, 96),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Height',
+                            style: TextStyle(
+                                fontSize: 45, fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${height}',
+                                style: TextStyle(fontSize: 45),
+                              ),
+                              Text('cm',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Color.fromARGB(255, 80, 79, 79)))
+                            ],
+                          ),
+                          SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 15),
+                                overlayShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 20),
+                                thumbColor: Colors.yellow,
+                                inactiveTrackColor: Colors.teal,
+                                activeTrackColor: Colors.orange,
+                              ),
+                              child: Slider(
+                                  value: height.toDouble(),
+                                  max: 200,
+                                  min: 40,
+                                  onChanged: (double value) {
+                                    setState(() {
+                                      height = value.toInt();
+                                    });
+                                  }))
+                        ],
+                      ),
+                    ),
+                  ),
                 )),
             Expanded(
                 flex: 3,
@@ -141,17 +194,9 @@ class _HomePageState extends State<HomePage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(35)),
                                 color: Colors.teal,
-                                // color: isMale == true
-                                //     ? Colors.teal
-                                //     : Color.fromARGB(255, 58, 78, 76),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // Icon(
-                                    //   Icons.male,
-                                    //   size: 55,
-                                    //   color: Color.fromARGB(255, 233, 199, 148),
-                                    // ),
                                     Text(
                                       'Weight',
                                       style: TextStyle(
@@ -226,17 +271,9 @@ class _HomePageState extends State<HomePage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(35)),
                                 color: Colors.teal,
-                                // color: isMale == true
-                                //     ? Colors.teal
-                                //     : Color.fromARGB(255, 58, 78, 76),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // Icon(
-                                    //   Icons.male,
-                                    //   size: 55,
-                                    //   color: Color.fromARGB(255, 233, 199, 148),
-                                    // ),
                                     Text(
                                       'Age',
                                       style: TextStyle(
@@ -308,14 +345,19 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding:
                       const EdgeInsets.only(bottom: 15, left: 20, right: 20),
-                  child: Container(
-                    width: double.infinity,
-                    child: Center(
-                      child: GestureDetector(
-                        onTap: (() {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ResultPage()));
-                        }),
+                  child: GestureDetector(
+                    onTap: () {
+                      // var result = weight / pow(height / 100, 2);
+                      // print('Our result is $result');
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ResultPage(
+                                height: height,
+                              )));
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      child: Center(
                         child: Text(
                           'Calculate',
                           style: TextStyle(
@@ -324,10 +366,10 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.yellow),
                         ),
                       ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Color.fromARGB(255, 110, 120, 129)),
                     ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 110, 120, 129)),
                   ),
                 )),
           ],
