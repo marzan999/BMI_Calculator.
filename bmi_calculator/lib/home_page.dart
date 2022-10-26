@@ -1,5 +1,7 @@
 // import 'dart:math';
 
+import 'dart:math';
+
 import 'package:bmi_calculator/result.dart';
 import 'package:flutter/material.dart';
 
@@ -347,13 +349,15 @@ class _HomePageState extends State<HomePage> {
                       const EdgeInsets.only(bottom: 15, left: 20, right: 20),
                   child: GestureDetector(
                     onTap: () {
-                      // var result = weight / pow(height / 100, 2);
-                      // print('Our result is $result');
+                      // print(height);
+                      // print(weight);
+
+                      var result = weight / pow(height / 100, 2);
+                      print('Our result is $result');
 
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ResultPage(
-                                height: height,
-                              )));
+                          builder: (context) =>
+                              ResultPage(weight, height, age)));
                     },
                     child: Container(
                       width: double.infinity,
